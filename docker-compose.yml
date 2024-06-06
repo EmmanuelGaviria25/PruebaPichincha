@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+
+  customerservice:
+    image: 'account-service'
+    build:
+      context: ./customer-service
+    container_name: customerservice
+    depends_on:
+      - db
+      - pgadmin
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db-bank
+      - SPRING_DATASOURCE_USERNAME=bankadmin
+      - SPRING_DATASOURCE_PASSWORD=bank123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  accountservice:
+    image: 'customer-service'
+    build:
+      context: ./account-service
+    container_name: accountservice
+    depends_on:
+      - db
+      - pgadmin
+    ports:
+      - 8081:8081
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/db-bank
+      - SPRING_DATASOURCE_USERNAME=bankadmin
+      - SPRING_DATASOURCE_PASSWORD=bank123
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=bankadmin
+      - POSTGRES_PASSWORD=bank123
+      - POSTGRES_DB=db-bank
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: emmanuel.gaviria.25@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: bank123
+    ports:
+      - 80:80
