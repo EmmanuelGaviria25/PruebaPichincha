@@ -18,13 +18,23 @@ Asegúrate de tener instalados los siguientes componentes en tu sistema:
 El proyecto está organizado de la siguiente manera:
 
 ├── customer-service
+
 │ ├── Dockerfile
+
 │ ├── pom.xml
+
 │ └── src
+
 ├── account-service
+
 │ ├── Dockerfile
+
 │ ├── pom.xml
+
 │ └── src
+
 ├── docker-compose.yml
+
 ├── PruebaPichincha.postman_collection.json
+
 └── README.md
